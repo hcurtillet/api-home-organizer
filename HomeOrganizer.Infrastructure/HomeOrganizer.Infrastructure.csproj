@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.2.1" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+      <PackageReference Include="EntityFramework" Version="6.5.1" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.15">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.14" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HomeOrganizer.Application\HomeOrganizer.Application.csproj" />
+      <ProjectReference Include="..\HomeOrganizer.Domain\HomeOrganizer.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeOrganizer.API", "HomeOrganizer.API\HomeOrganizer.API.csproj", "{A059E08C-0D09-418D-AC34-22741A06150A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{605DC7E0-4E0F-4987-8EB2-84232470F608} = {605DC7E0-4E0F-4987-8EB2-84232470F608}
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B} = {F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}
+		{C1970D7D-F37F-4AB8-A577-7A4F03F5D147} = {C1970D7D-F37F-4AB8-A577-7A4F03F5D147}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeOrganizer.Domain", "HomeOrganizer.Domain\HomeOrganizer.Domain.csproj", "{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeOrganizer.Application", "HomeOrganizer.Application\HomeOrganizer.Application.csproj", "{605DC7E0-4E0F-4987-8EB2-84232470F608}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B} = {F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeOrganizer.Infrastructure", "HomeOrganizer.Infrastructure\HomeOrganizer.Infrastructure.csproj", "{C1970D7D-F37F-4AB8-A577-7A4F03F5D147}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B} = {F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A059E08C-0D09-418D-AC34-22741A06150A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A059E08C-0D09-418D-AC34-22741A06150A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A059E08C-0D09-418D-AC34-22741A06150A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A059E08C-0D09-418D-AC34-22741A06150A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F365CB4A-D7C7-4C52-8FE3-CC6091DE614B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605DC7E0-4E0F-4987-8EB2-84232470F608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605DC7E0-4E0F-4987-8EB2-84232470F608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{605DC7E0-4E0F-4987-8EB2-84232470F608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{605DC7E0-4E0F-4987-8EB2-84232470F608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1970D7D-F37F-4AB8-A577-7A4F03F5D147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1970D7D-F37F-4AB8-A577-7A4F03F5D147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1970D7D-F37F-4AB8-A577-7A4F03F5D147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1970D7D-F37F-4AB8-A577-7A4F03F5D147}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
