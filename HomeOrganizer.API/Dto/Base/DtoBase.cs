@@ -1,4 +1,4 @@
-namespace HomeOrganizer.API.Dto;
+namespace HomeOrganizer.API.Dto.Base;
 
 public abstract class DtoBase
 {

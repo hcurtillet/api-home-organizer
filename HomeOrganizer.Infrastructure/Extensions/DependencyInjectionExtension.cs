@@ -15,22 +15,23 @@ public static class DependencyInjectionExtension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomaineventInterceptor>();
+        services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<ISaveChangesInterceptor, AuditInterceptor>();
-        services.AddDbContext<HomeOrganizerContext>(options =>
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomaineventInterceptor>();
+        services.AddDbContext<HomeOrganizerContext>((sp, options) =>
+        {
+
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseMySQL(configuration.GetConnectionString("DefaultConnection"))
                 .UseLazyLoadingProxies()
                 .EnableSensitiveDataLogging()
-                .EnableDetailedErrors()
-            
-            );
+                .EnableDetailedErrors();
+        });
         
         services.AddScoped<IHomeOrganizerContext>(provider => provider.GetRequiredService<HomeOrganizerContext>());
 
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
-        services.AddScoped<IIdentityService, IdentityService>();
-        
         return services;
     }
 }

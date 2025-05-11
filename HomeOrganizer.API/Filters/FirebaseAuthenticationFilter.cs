@@ -17,7 +17,7 @@ public class FirebaseAuthenticationFilter : IAuthorizationFilter
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         #if DEBUG
-        if (_identityService.StoreCurrentUser("hugo.curtillet@gmail.com"))
+        if (_identityService.StoreCurrentUser("hcurtillet@eneance.com"))
         {
             return;
         }
@@ -37,12 +37,8 @@ public class FirebaseAuthenticationFilter : IAuthorizationFilter
 
                 var email = decodedToken.Claims["email"].ToString();
                 // var email = firebaseUser.Email;
-                var isAuthenticated = _identityService.StoreCurrentUser(email);
+                _identityService.StoreCurrentUser(email);
                 
-                if (!isAuthenticated)
-                {
-                    context.Result = new UnauthorizedResult();
-                }
             }
             catch (AggregateException ex) when (ex.InnerExceptions.Any(e => e is FirebaseAuthException))
             {

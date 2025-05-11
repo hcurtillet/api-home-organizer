@@ -12,7 +12,7 @@ public class Home: EntityBase
     public string Name { get; set; } = null!;
 
     [InverseProperty("Home")]
-    public virtual ICollection<TaskHome> TaskHomes { get; set; } = new List<TaskHome>();
+    public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
 
     [InverseProperty("Home")]
     public virtual ICollection<UserAccountHome> UserAccountHomes { get; set; } = new List<UserAccountHome>();

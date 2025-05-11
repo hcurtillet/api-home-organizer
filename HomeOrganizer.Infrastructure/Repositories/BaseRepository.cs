@@ -15,9 +15,9 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Enti
         _dbSet = context.Set<TEntity>();
     }
 
-    public TEntity GetById(int id)
+    public TEntity GetById(Guid id)
     {
-        return _dbSet.Find(id) ?? throw new KeyNotFoundException($"Entity with id {id} not found.");
+        return _dbSet.FirstOrDefault(e => e.Id == id) ?? throw new KeyNotFoundException($"Entity with id {id} not found.");
     }
 
     public IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate)
@@ -72,7 +72,7 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Enti
         _dbSet.UpdateRange(entityBases.ToArray());
     }
 
-    public void Delete(int id)
+    public void Delete(Guid id)
     {
         var entity = GetById(id);
         if (entity == null)

@@ -12,7 +12,6 @@ public interface IHomeOrganizerContext
 
     DbSet<Task> Tasks { get; set; }
 
-    DbSet<TaskHome> TaskHomes { get; set; }
 
     DbSet<TaskUserAccount> TaskUserAccounts { get; set; }
 

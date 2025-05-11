@@ -5,7 +5,12 @@ namespace HomeOrganizer.Application.Common.Interfaces;
 
 public interface ICurrentUser
 {
-    public Guid UserId { get; }
+    public bool IsAuthenticated { get; }
+    public Guid Id { get; }
     public string Email { get; }
+    public string Firstname { get; }
+    public string Lastname { get; }
     public Dictionary<Guid, UserAccountHomeRole> HomeRoles { get; }
+
+    public void SetCurrentUser(UserAccount userAccount);
 }

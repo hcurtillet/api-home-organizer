@@ -1,3 +1,4 @@
+using System.Data.Entity.Infrastructure.Design;
 using System.Linq.Expressions;
 using HomeOrganizer.Application.Common.Interfaces;
 using HomeOrganizer.Application.Common.Interfaces.Dao;
@@ -16,7 +17,7 @@ public abstract class BaseDao<TEntity>: IBaseDao<TEntity> where TEntity : Entity
         _repository = unitOfWork.GetRepository<TEntity>();
     }
 
-    public TEntity GetById(int id)
+    public TEntity GetById(Guid id)
     {
         return _repository.GetById(id);
     }
@@ -30,44 +31,87 @@ public abstract class BaseDao<TEntity>: IBaseDao<TEntity> where TEntity : Entity
     {
         return _repository.GetAll();
     }
-    
-    public void Add(TEntity entity)
+
+    public TEntity Add(TEntity entity) => Add(entity, true);
+    public TEntity Add(TEntity entity, bool save)
     {
         _repository.Add(entity);
+        if (save)
+        {
+            SaveChanges();
+        }
+
+        return entity;
     }
-    
-    public void AddRange(IEnumerable<TEntity> entities)
+
+    public IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities) => AddRange(entities, true);
+    public IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities, bool save)
     {
         _repository.AddRange(entities);
+        if (save)
+        {
+            SaveChanges();
+        }
+
+        return entities;
     }
-    
-    public void Update(TEntity entity)
+
+    public TEntity Update(TEntity entity) => Update(entity, true);
+    public TEntity Update(TEntity entity, bool save)
     {
         _repository.Update(entity);
+        if (save)
+        {
+            SaveChanges();
+        }
+
+        return entity;
     }
-    
-    public void UpdateRange(IEnumerable<TEntity> entities)
+
+    public IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> entities) => UpdateRange(entities, true);
+    public IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> entities, bool save)
     {
         _repository.UpdateRange(entities);
+        if (save)
+        {
+            SaveChanges();
+        }
+
+        return entities;
     }
-    
-    public void Delete(int id)
+
+    public void Delete(Guid id) => Delete(id, true);
+    public void Delete(Guid id, bool save)
     {
         var entity = _repository.GetById(id);
         if (entity != null)
         {
             _repository.Delete(entity);
         }
+        if (save)
+        {
+            SaveChanges();
+        }
     }
-    
-    public void Delete(TEntity entity)
+
+    public void Delete(TEntity entity) => Delete(entity, true);
+    public void Delete(TEntity entity, bool save)
     {
         _repository.Delete(entity);
+        if (save)
+        {
+            SaveChanges();
+        }
     }
-    
-    public void DeleteRange(IEnumerable<TEntity> entities)
+
+    public void DeleteRange(IEnumerable<TEntity> entities) => DeleteRange(entities, true);
+    public void DeleteRange(IEnumerable<TEntity> entities, bool save)
     {
         _repository.DeleteRange(entities);
+        if (save)
+        {
+            SaveChanges();
+        }
     }
     
     public int SaveChanges()

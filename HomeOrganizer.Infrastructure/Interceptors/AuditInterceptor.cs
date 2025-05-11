@@ -7,17 +7,17 @@ namespace HomeOrganizer.Infrastructure.Interceptors;
 
 public class AuditInterceptor: SaveChangesInterceptor
 {
-    private readonly IIdentityService _identityService;
+    private readonly ICurrentUser _currentUser;
 
-    public AuditInterceptor(IIdentityService identityService)
+    public AuditInterceptor(ICurrentUser currentUser)
     {
-        _identityService = identityService;
+        _currentUser = currentUser;
     }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         if (eventData.Context == null) return result;
-        var userId = _identityService.GetCurrentUserId().ToString();
+        var userId = _currentUser.Id.ToString();
         var now = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
         foreach (var entry in eventData.Context.ChangeTracker.Entries<EntityBase>())
         {

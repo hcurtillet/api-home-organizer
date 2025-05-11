@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using HomeOrganizer.Application.Common.Interfaces;
 using HomeOrganizer.Domain.Common;
 using HomeOrganizer.Domain.Entities;
@@ -22,9 +23,7 @@ public partial class HomeOrganizerContext : DbContext, IHomeOrganizerContext
     public virtual DbSet<Home> Homes { get; set; }
 
     public virtual DbSet<Task> Tasks { get; set; }
-
-    public virtual DbSet<TaskHome> TaskHomes { get; set; }
-
+    
     public virtual DbSet<TaskUserAccount> TaskUserAccounts { get; set; }
 
     public virtual DbSet<UserAccount> UserAccounts { get; set; }
@@ -51,29 +50,18 @@ public partial class HomeOrganizerContext : DbContext, IHomeOrganizerContext
         modelBuilder.Entity<Task>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
-
+            
+            entity.HasOne(d => d.Home).WithMany(p => p.Tasks)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_task_home");
+            
+            entity.Property(e => e.Description).IsFixedLength();
+            entity.Property(e => e.DueDt).IsFixedLength();
+            entity.Property(e => e.DueTm).IsFixedLength();
             entity.Property(e => e.CreatedAt).IsFixedLength();
             entity.Property(e => e.CreatedBy).IsFixedLength();
             entity.Property(e => e.UpdatedAt).IsFixedLength();
             entity.Property(e => e.UpdatedBy).IsFixedLength();
-        });
-
-        modelBuilder.Entity<TaskHome>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.Property(e => e.CreatedAt).IsFixedLength();
-            entity.Property(e => e.CreatedBy).IsFixedLength();
-            entity.Property(e => e.UpdatedAt).IsFixedLength();
-            entity.Property(e => e.UpdatedBy).IsFixedLength();
-
-            entity.HasOne(d => d.Home).WithMany(p => p.TaskHomes)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_task_home_home");
-
-            entity.HasOne(d => d.Task).WithMany(p => p.TaskHomes)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_task_home_task");
         });
 
         modelBuilder.Entity<TaskUserAccount>(entity =>
@@ -121,6 +109,9 @@ public partial class HomeOrganizerContext : DbContext, IHomeOrganizerContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user_account_home_user_account");
         });
+        
+        // modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         
         OnModelCreatingPartial(modelBuilder);
     }

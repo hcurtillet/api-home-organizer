@@ -1,4 +1,11 @@
+using AutoMapper;
+using HomeOrganizer.API.Dto;
+using HomeOrganizer.API.Dto.UserAccount;
 using HomeOrganizer.Application.Common.Interfaces;
+using HomeOrganizer.Application.UserAccounts.Queries.GetCurrentUser;
+using HomeOrganizer.Domain.Entities;
+using HomeOrganizer.Infrastructure.Authentication;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeOrganizer.API.Controllers;
@@ -7,21 +14,18 @@ namespace HomeOrganizer.API.Controllers;
 [Route("[controller]")]
 public class UserAccountController: Controller
 {
-    private readonly IIdentityService _identityService;
-
-    public UserAccountController(IIdentityService identityService)
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+    public UserAccountController(IMediator mediator, IMapper mapper)
     {
-        _identityService = identityService;
+        _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpGet("me")]
-    public IActionResult GetUserAccount()
+    public async Task<IActionResult> GetUserAccount()
     {
-        var user = _identityService.GetCurrentUser();
-        if (user == null)
-        {
-            return Unauthorized();
-        }
-        return Ok(user);
+        var userResponse = await _mediator.Send(new GetCurrentUserRequest());
+        return Ok(_mapper.Map<CurrentUserDto>((CurrentUser)userResponse.CurrentUser));
     }
 }
