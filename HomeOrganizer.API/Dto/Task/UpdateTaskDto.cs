@@ -15,7 +15,7 @@ public class UpdateTaskDto
     [JsonPropertyName("taskStatus")]
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public TaskStatus TaskStatus { get; set; }
-    [JsonPropertyName("userAccountIdToAdd")]
+    [JsonPropertyName("userAccountIdsToAdd")]
     public List<Guid>? UserAccountIdsToAdd { get; set; } = [];
 
     [JsonPropertyName("userAccountIdsToRemove")]

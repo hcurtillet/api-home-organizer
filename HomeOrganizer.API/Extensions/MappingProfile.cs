@@ -18,11 +18,12 @@ public class MappingProfile : AutoMapper.Profile
         CreateMap<UserAccount, UserAccountDto>();
         CreateMap<EntityBase, DtoBase>();
         CreateMap<CurrentUser, CurrentUserDto>();
-        CreateMap<Home, HomeDto>()
+        CreateMap<Home, Dto.Home.HomeDto>()
             .ForMember(dest => dest.Tasks, 
                 opt => opt.MapFrom(src => src.Tasks))
             .ForMember(dest => dest.UserAccounts, 
                 opt => opt.MapFrom(src => src.UserAccountHomes));
+        CreateMap<Home, Dto.Task.HomeDto>();
         CreateMap<UserAccountHome, Dto.Home.UserAccountHomeDto>()
             .IncludeMembers(x => x.UserAccount)
             .ForMember(dest => dest.Id,

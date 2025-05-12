@@ -3,6 +3,7 @@ using HomeOrganizer.API.Dto.Home;
 using HomeOrganizer.Application.Common.Exceptions;
 using HomeOrganizer.Application.Homes.Commands.AddUserAccountToHome;
 using HomeOrganizer.Application.Homes.Commands.CreateHome;
+using HomeOrganizer.Application.Homes.Commands.RemoveUserAccountToHome;
 using HomeOrganizer.Application.Homes.Queries.GetCurrentUserHomes;
 using HomeOrganizer.Application.Homes.Queries.GetHome;
 using HomeOrganizer.Domain.Entities;
@@ -79,6 +80,20 @@ public class HomeController: Controller
         {
             var result = await _mediator.Send(new AddUserAccountToHomeRequest(addUserAccountToHomeDto.HomeId, addUserAccountToHomeDto.UserAccountId));
             return Ok(_mapper.Map<Home, HomeDto>(result.Home));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+    
+    [HttpDelete("{id:guid}/userAccount/{userAccountId:guid}")]
+    public async Task<IActionResult> RemoveUserAccountFromHome([FromRoute] Guid id, [FromRoute] Guid userAccountId)
+    {
+        try
+        {
+            await _mediator.Send(new RemoveUserAccountToHomeRequest(id, userAccountId));
+            return Ok();
         }
         catch (Exception e)
         {

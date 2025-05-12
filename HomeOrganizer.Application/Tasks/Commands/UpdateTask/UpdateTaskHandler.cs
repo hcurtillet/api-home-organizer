@@ -13,11 +13,13 @@ public class UpdateTaskHandler: IRequestHandler<UpdateTaskRequest, UpdateTaskRes
 {
     private readonly IIdentityService _identityService;
     private readonly ITaskDao _taskDao;
+    private readonly ITaskUserAccountDao _taskUserAccountDao;
 
-    public UpdateTaskHandler(IIdentityService identityService, ITaskDao taskDao)
+    public UpdateTaskHandler(IIdentityService identityService, ITaskDao taskDao, ITaskUserAccountDao taskUserAccountDao)
     {
         _identityService = identityService;
         _taskDao = taskDao;
+        _taskUserAccountDao = taskUserAccountDao;
     }
 
     public Task<UpdateTaskResponse> Handle(UpdateTaskRequest request, CancellationToken cancellationToken)
@@ -49,7 +51,7 @@ public class UpdateTaskHandler: IRequestHandler<UpdateTaskRequest, UpdateTaskRes
 
         if (taskUserAccountToRemove.Count > 0)
         {
-            taskUserAccountToRemove.ForEach(e => task.TaskUserAccounts.Remove(e));
+            _taskUserAccountDao.DeleteRange(taskUserAccountToRemove);
         }
         
         request.UserAccountIdsToAdd.ForEach(id =>
@@ -60,7 +62,11 @@ public class UpdateTaskHandler: IRequestHandler<UpdateTaskRequest, UpdateTaskRes
                 {
                     throw new UserNotInHomeException(id, task.HomeId);
                 }
-                task.TaskUserAccounts.Add(new TaskUserAccount { UserAccountId = id });
+                _taskUserAccountDao.Add(new TaskUserAccount
+                {
+                    TaskId = task.Id,
+                    UserAccountId = id
+                }, false);
             }
         });
 

@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using HomeOrganizer.API.Dto.Base;
-using HomeOrganizer.API.Dto.Home;
 using HomeOrganizer.API.Dto.UserAccount;
 using TaskStatus = HomeOrganizer.Domain.Enum.TaskStatus;
 
