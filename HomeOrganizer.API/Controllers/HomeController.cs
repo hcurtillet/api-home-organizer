@@ -3,6 +3,7 @@ using HomeOrganizer.API.Dto.Home;
 using HomeOrganizer.Application.Common.Exceptions;
 using HomeOrganizer.Application.Homes.Commands.AddUserAccountToHome;
 using HomeOrganizer.Application.Homes.Commands.CreateHome;
+using HomeOrganizer.Application.Homes.Commands.DeleteHome;
 using HomeOrganizer.Application.Homes.Commands.RemoveUserAccountToHome;
 using HomeOrganizer.Application.Homes.Queries.GetCurrentUserHomes;
 using HomeOrganizer.Application.Homes.Queries.GetHome;
@@ -94,6 +95,32 @@ public class HomeController: Controller
         {
             await _mediator.Send(new RemoveUserAccountToHomeRequest(id, userAccountId));
             return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteHome([FromRoute] Guid id)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteHomeRequest(id));
+            return Ok();
+        }
+        catch (CurrentUserNoHomeException e)
+        {
+            return new UnauthorizedObjectResult($"The user {e.UserId} does not have acces to the home {e.HomeId}");
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Unauthorized(e.Message);
         }
         catch (Exception e)
         {

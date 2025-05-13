@@ -1,6 +1,8 @@
 using AutoMapper;
 using HomeOrganizer.API.Dto.Task;
+using HomeOrganizer.Application.Common.Exceptions;
 using HomeOrganizer.Application.Tasks.Commands.CreateTask;
+using HomeOrganizer.Application.Tasks.Commands.DeleteTask;
 using HomeOrganizer.Application.Tasks.Commands.UpdateTask;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +48,28 @@ public class TaskController: Controller
         catch (UnauthorizedAccessException e)
         {
             return Unauthorized(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteTask([FromRoute] Guid id)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteTaskRequest(id));
+            return Ok();
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Unauthorized(e.Message);
+        }
+        catch(NotFoundException e)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {

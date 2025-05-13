@@ -35,7 +35,7 @@ public class AuthenticationHomeBehavior<TRequest, TResponse> : IPipelineBehavior
             var role = _identityService.GetCurrentUserRole(homeIdentifier);
             if (!authenticatedHomeAttribute.Roles.Contains(role))
             {
-                throw new UnauthorizedAccessException();
+                throw new UnauthorizedAccessException($"User with role {role} is not authorized to manage the home {homeIdentifier}");
             }
         }
 

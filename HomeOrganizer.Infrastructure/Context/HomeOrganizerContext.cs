@@ -102,7 +102,7 @@ public partial class HomeOrganizerContext : DbContext, IHomeOrganizerContext
             entity.Property(e => e.UpdatedBy).IsFixedLength();
 
             entity.HasOne(d => d.Home).WithMany(p => p.UserAccountHomes)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_user_account_home_home");
 
             entity.HasOne(d => d.UserAccount).WithMany(p => p.UserAccountHomes)
